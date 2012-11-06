@@ -13,28 +13,26 @@ object RepeatedComposition extends App {
    * Takes one argument functions f and a positive integer n for nth repeated function
    * Returns itself until n=1
    */
-  def compose(f: Int => Int, x: Int, n: Int): Int = {
-    n match {
-      case 0 => x
-      case 1 => f(x)
-      case _ => compose(f, f(x), n - 1)
-    }
-  }
-
-  /**
-   * Takes one argument functions f and a positive integer n for nth repeated function
-   * Returns compose for computing value for input x nth times
-   */
   def repeated(f: Int => Int, n: Int) = {
-    x: Int => compose(f, f(x), n - 1)
+
+    def rep(g: Int => Int, i: Int): Int => Int = i match {
+
+      case 1 => x => g(x)
+
+      case _ => rep(f compose g, i - 1)
+
+    }
+
+    rep(f, n)
+
   }
 
-  println(repeated(square, 2)(5)) //Output is 625
+  println(repeated(square, 1)(5)) // should be equal to 25
 
-  println(repeated(square, 1)(5)) //Output is 25
+  println(repeated(square, 2)(5)) // should be equal to 625
 
-  println(repeated(square, 2)(2)) //Output is 16
+  println(repeated(square, 2)(2)) // should be equal to 16
 
-  println(repeated(square, 2)(3)) //Output is 81
+  println(repeated(square, 2)(3)) // should be equal to 81
 
 }
