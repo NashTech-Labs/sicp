@@ -1,0 +1,10 @@
+.cache
+modules/
+bin/
+target/
+.project
+.classpath
+.settings
+.DS_STORE
+.tags
+.tags_sorted_by_file
